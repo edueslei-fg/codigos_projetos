@@ -1,0 +1,13 @@
+def call_api_login():
+    url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"
+    files = {
+        'dsUsuario': (None, 'root.fg'),
+        'dsSenha': (None, 'Fg@2025@')
+    }
+    headers = {'dsCliente': API_CLIENT, 'dsChaveAutenticacao': AUTENTICACAO}
+    resp = requests.post(url, headers=headers, files=files)
+    resp.raise_for_status()
+    token = resp.json().get("tokenUsuario")
+    logging.info("Login OK, token recebido")
+    return token
+
