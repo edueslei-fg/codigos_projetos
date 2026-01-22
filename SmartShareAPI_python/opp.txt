@@ -11,3 +11,22 @@ def call_api_login():
     logging.info("Login OK, token recebido")
     return token
 
+
+
+    def call_avancar_Fluxo():
+    url=f"{API_BASE}/api/v1/Fluxo/AvancaFluxo";
+    payload =json.dumps({
+        "lstCamposForm":[],
+        "lstExecutores": [{"cdUsuario":2}]
+    });
+    headers = {
+    'dsCliente': f'{API_CLIENT}',
+    'dsChaveAutenticacao': f'{API_KEY}',
+    'dsEmailExecutor': f'{EMAIL_EXEC}',
+    'cdFluco': f'{COD_FLUXO}',
+    'Content-Type' : 'application/json' 
+    };
+    response = requests.post(url, headers=headers, data=payload);
+    response.raise_for_status();
+    return response;
+
