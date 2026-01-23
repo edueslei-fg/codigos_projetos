@@ -14,11 +14,11 @@ SENHA = os.getenv("SENHA")
 AUTENTICACAO = os.getenv("AUTENTICACAO")
 TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
 
-cod_fluxo = input("Qual o código do processo? : ")
-cod_tarefa = input("Avançará qual tarefa? : ")
-OPCAO = input("Opção:");
+cod_fluxo = input("Qual o código do processo? : ") #3280
+#cod_tarefa = input("Avançará qual tarefa? : ") #9
+#OPCAO = input("Opção:");
+Email = input("Email ADM Cadastrado:");
 
-#Gera Token de acesso para a API SmartShare
 def call_api_login():
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"
     files = {
@@ -34,25 +34,28 @@ def call_api_login():
 
 token = call_api_login()
 
-print(token)
-def avanca_fluxo(token, cod_fluxo, cod_tarefa):
-    url = f"{API_BASE}/api/v2/Fluxo/AvancaFluxo"
-    payload = json.dumps({
-        "lstCamposForm": [],
-        "lstExecutores": [{"cdUsuario": 2}]
-    })
-    headers = {
-        'dsCliente': API_CLIENT,
-        'dsChaveAutenticacao': AUTENTICACAO,
-        'tokenUsuario': f"{token}",
-        'cdFluxo': cod_fluxo,
-        'cdTarefa': cod_tarefa,
-        'cdOpcao': OPCAO,
-        'Content-Type': 'application/json'
-    }
+url = "https://portal.smartshare.com.br:443/fg/SmartshareAPI/api/v1/Fluxo/AvancaFluxo"
+headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "dsCliente": "mobile",
+    "cdFluxo": str(cod_fluxo),
+    "dsChaveAutenticacao": AUTENTICACAO,
+    "tokenUsuario": str(token),
+    "dsEmailExecutor": str(Email)
+}
+print("FLUXO:", cod_fluxo)
 
-    response = requests.post(url, headers=headers, data=payload)
-    response.raise_for_status()
-    print("Fluxo avançado com sucesso.")
-response = avanca_fluxo(token, cod_fluxo, cod_tarefa)
-print(response)
+body = {
+  "cdFluxo":  str(cod_fluxo),  
+  "dsEmailExecutor": f"{Email}"
+}
+response = requests.post(url, headers=headers, json=body)
+print("STATUS:", response.status_code)
+print("BODY:", response.text)
+print(response.request.headers)
+print(response.request.body)
+
+response.raise_for_status()
+
+print(response);

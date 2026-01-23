@@ -11,6 +11,8 @@ def call_api_login():
     logging.info("Login OK, token recebido")
     return token
 
+token = call_api_login()
+
 
 
     def call_avancar_Fluxo():
@@ -30,3 +32,30 @@ def call_api_login():
     response.raise_for_status();
     return response;
 
+
+
+
+def avanca_fluxo(token, cod_fluxo, cod_tarefa):
+    url = f"{API_BASE}/api/v2/Fluxo/AvancaFluxo"
+    
+    headers = {
+        'dsCliente': str(API_CLIENT),
+        'dsChaveAutenticacao': f"{AUTENTICACAO}",
+        'tokenUsuario': f"{token}",
+        'cdFluxo': str(cod_fluxo),
+        'cdTarefa': str(cod_tarefa),
+        'cdOpcao': OPCAO,
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.post(url, headers=headers, json={
+    "lstCamposForm": [],
+    "lstExecutores": [{"cdUsuario": 2}]})
+    print("STATUS:", response.status_code)
+    print("BODY:", response.text)
+
+    response.raise_for_status()
+    print("Fluxo avançado com sucesso.")
+    return response
+response = avanca_fluxo(token, cod_fluxo, cod_tarefa)
+print(response)
