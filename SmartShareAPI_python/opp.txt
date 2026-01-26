@@ -1,3 +1,22 @@
+import requests, logging, json, os, sys, time
+import mimetypes
+from dotenv import load_dotenv
+import pandas as pd
+import json
+
+load_dotenv();
+API_BASE = os.getenv("API_BASE")
+API_CLIENT = os.getenv("API_CLIENT")
+API_KEY = os.getenv("API_KEY")
+COD_TAREFA = os.getenv("COD_TAREFA")
+USUARIO = os.getenv("USUARIO")
+SENHA = os.getenv("SENHA")
+AUTENTICACAO = os.getenv("AUTENTICACAO")
+TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
+
+cod_fluxo = input("Qual o código do processo? : ") #3280
+Email = input("Email ADM Cadastrado:");
+
 def call_api_login():
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"
     files = {
@@ -12,50 +31,30 @@ def call_api_login():
     return token
 
 token = call_api_login()
-
-
-
-    def call_avancar_Fluxo():
-    url=f"{API_BASE}/api/v1/Fluxo/AvancaFluxo";
-    payload =json.dumps({
-        "lstCamposForm":[],
-        "lstExecutores": [{"cdUsuario":2}]
-    });
+def pular_fluxo():
+    url = "https://portal.smartshare.com.br:443/fg/SmartshareAPI/api/v1/Fluxo/AvancaFluxo"
     headers = {
-    'dsCliente': f'{API_CLIENT}',
-    'dsChaveAutenticacao': f'{API_KEY}',
-    'dsEmailExecutor': f'{EMAIL_EXEC}',
-    'cdFluco': f'{COD_FLUXO}',
-    'Content-Type' : 'application/json' 
-    };
-    response = requests.post(url, headers=headers, data=payload);
-    response.raise_for_status();
-    return response;
-
-
-
-
-def avanca_fluxo(token, cod_fluxo, cod_tarefa):
-    url = f"{API_BASE}/api/v2/Fluxo/AvancaFluxo"
-    
-    headers = {
-        'dsCliente': str(API_CLIENT),
-        'dsChaveAutenticacao': f"{AUTENTICACAO}",
-        'tokenUsuario': f"{token}",
-        'cdFluxo': str(cod_fluxo),
-        'cdTarefa': str(cod_tarefa),
-        'cdOpcao': OPCAO,
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "dsCliente": "mobile",
+        "cdFluxo": str(cod_fluxo),
+        "dsChaveAutenticacao": AUTENTICACAO,
+        "tokenUsuario": str(token),
+        "dsEmailExecutor": str(Email)
     }
+    print("FLUXO:", cod_fluxo)
 
-    response = requests.post(url, headers=headers, json={
-    "lstCamposForm": [],
-    "lstExecutores": [{"cdUsuario": 2}]})
+    body = {
+      "cdFluxo":  str(cod_fluxo),  
+      "dsEmailExecutor": f"{Email}"
+    }
+    response = requests.post(url, headers=headers, json=body)
     print("STATUS:", response.status_code)
     print("BODY:", response.text)
+    print(response.request.headers)
+    print(response.request.body)
 
     response.raise_for_status()
-    print("Fluxo avançado com sucesso.")
     return response
-response = avanca_fluxo(token, cod_fluxo, cod_tarefa)
-print(response)
+
+print(pular_fluxo());
