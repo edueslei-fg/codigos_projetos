@@ -12,7 +12,7 @@ AUTENTICACAO = os.getenv("AUTENTICACAO")    #|
 TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")    #|
 
 cod_fluxo = input("Qual o código do processo? : ")       #| Código do Fluxo que será pulado.
-Email = input("Email ADM Cadastrado:");            #| Email do Administrador que avançará o Fluxo.
+Email = "lorenzo.guedes@fgempreendimentos.com.br"#input("Email ADM Cadastrado:");            #| Email do Administrador que avançará o Fluxo.
 
 def call_api_login():           #| Função para gerar token e validação do Usuário.
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     #| Faz conexção com a API do Smart Share.
@@ -30,14 +30,14 @@ def call_api_login():           #| Função para gerar token e validação do Us
 token = call_api_login()        #| Faz o Chamado da Função para gerar o token.
 
 def pular_fluxo():      #| Faz o chamado da API para Avanço de Fluxo Forçado.
-    url = f"{API_BASE}/SmartshareAPI/api/v1/Fluxo/AvancaFluxo"      #| Faz a conexão com a API do Smart Share.
+    url = f"{API_BASE}/api/v1/Fluxo/AvancaFluxo"      #| Faz a conexão com a API do Smart Share.
     headers = {         #| Define as variaveis do Header.
         "Content-Type": "application/json",
         "Accept": "application/json",
         "dsCliente": "mobile",
         "cdFluxo": str(cod_fluxo), 
         "dsChaveAutenticacao": AUTENTICACAO,
-        "tokenUsuario": str(token),         #| Token gerado pelo Smart Share.
+        "tokenUsuario": str(token),    #| Token gerado pelo Smart Share.
         "dsEmailExecutor": str(Email) 
     }
     print("FLUXO:", cod_fluxo) 
