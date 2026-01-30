@@ -58,3 +58,14 @@ def pular_fluxo():
     return response
 
 print(pular_fluxo());
+
+
+
+headers = {         #| Define as variaveis do Header.
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "dsCliente": "mobile",
+        "cdProcesso": cod_Processo, 
+        "dsChaveAutenticacao": AUTENTICACAO,
+        "tokenUsuario": str(TOKEN),    #| Token gerado pelo Smart Share. 
+    }

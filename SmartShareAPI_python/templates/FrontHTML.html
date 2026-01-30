@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        
+            <input type="number" id="CdFluxo" placeholder="Código do CodigoFluxo">
+            <input type="number" id="CdTarefa" placeholder="Código da Tarefa">
+            <button type="button" onclick="enviar()">Enviar</button>
+
+       
+    </body>
+    <script>
+        function enviar(){
+            fetch("/dados", {
+
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body:JSON.stringify({CdFluxo:document.getElementById("CdFluxo").value, CdTarefa:document.getElementById("CdTarefa").value})
+            },
+            
+        )
+        .then(r => r.text())
+        .then(resp => alert(resp));
+    }
+        
+    </script>
+</html>
