@@ -1,3 +1,3 @@
-def processar_nome(CdFluxo, CdTarefa):
-    print("Recebido:", CdFluxo, CdTarefa )
-    return f"Olá {CdFluxo} e {CdTarefa}, salvo com sucesso!"
+def pular_fluxo(CdFluxo):
+    print("Recebido:", CdFluxo )
+    return f"Olá {CdFluxo}, salvo com sucesso!"

@@ -1,9 +1,8 @@
 import requests, logging, json, os      
 from dotenv import load_dotenv          
 import json                             
-def processar_nome(CdFluxo):
-    print("Recebido:", CdFluxo )
-    return f"Olá {CdFluxo}, salvo com sucesso!"
+def pular_fluxo(CdFluxo):
+    return CdFluxo
 
 load_dotenv();      
 API_BASE = os.getenv("API_BASE")            
@@ -13,10 +12,11 @@ SENHA = os.getenv("SENHA")
 AUTENTICACAO = os.getenv("AUTENTICACAO")    
 TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")    
 
-cod_fluxo = processar_nome()#input("Qual o código do processo? : ")       
+cod_fluxo = pular_fluxo()
 Email = "lorenzo.guedes@fgempreendimentos.com.br"           
 
-def call_api_login():           
+def call_api_login(CdFluxo):  
+             
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     
     files = {
         'dsUsuario': (None, 'root.fg'), 

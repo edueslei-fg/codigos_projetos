@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from serviço import processar_nome
+from FluxoModf import pular_fluxo
 
 app = Flask(__name__)
 
@@ -10,11 +10,11 @@ def index():
 @app.route("/dados", methods=["POST"])
 def dados():
     data = request.json
-    CdFluxo = data["CdFluxo"]
-    CdTarefa = data["CdTarefa"]
+    CdFluxo = int(data["CdFluxo"])
     
+    print("Código",{CdFluxo} ,"recebido")
 
-    resultado = processar_nome(CdFluxo,CdTarefa)
+    resultado = pular_fluxo(CdFluxo)
 
     return resultado
 
