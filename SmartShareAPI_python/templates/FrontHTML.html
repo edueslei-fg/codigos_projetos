@@ -10,20 +10,38 @@
                 <img src="{{ url_for('static', filename='LogoFG.png') }}" alt="" class="LogoFG">
             <h1 class="Titulo">Site Python Teste</h1>
             <nav class="menu">
-                <a href="https://portal.smartshare.com.br/fg/SmartShareAPI/Swagger/ui/index#/">Swagger Smart Share</a>
+                <a href="https://portal.smartshare.com.br/fg/SmartShareAPI/Swagger/ui/index#/" target="_blank">Swagger Smart Share</a>
             </nav>
         </div>
         </header>
-        <br>
-        <section>
+        
+    <section>
             <h1>Anvançar Fluxo</h1>
         <div class="inputs">
             <label for="Código do Fluxo">Código do Fluxo</label>
-            <input type="number" id="CdFluxo" placeholder="Código do CodigoFluxo">
-            
+            <input type="number" class="InputInfo" id="CdFluxo" placeholder="Código do Fluxo">
             <button class="botao" type="button" onclick="enviar()">Enviar</button>
         </div>
     </section>
+    <section>
+
+            <h1>Alterar Info. do Formulário de um Processo</h1>
+        <div class="inputs">
+            <label for="Código do Fluxo">Código do Fluxo</label>
+            <input type="number" class="InputInfo" id="CdFluxo" placeholder="Código do Fluxo">
+
+            <label for="Código do Fluxo">Código da Tarefa</label>
+            <input type="text" class="InputInfo" id="CdTarefa" placeholder="Código da Tarefa">
+
+            <label for="Código do Fluxo">Campo para alteração</label>
+            <input type="text" class="InputInfo" id="CdCampo" placeholder="Código do Campo para alteração">
+            <label for="Código do Fluxo">Valor</label>
+            <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
+            <button class="botao" type="button" onclick="enviarAlteracao()">Enviar</button>
+
+        </div>
+    </section>
+
     </body>
 
     <script href="{{url_for('static', filename='InfoEnv.js')}}"></script>

@@ -7,8 +7,8 @@ app = Flask(__name__)
 def index():
     return render_template("FrontHTML.html")
 
-@app.route("/dados", methods=["POST"])
-def dados():
+@app.route("/dadosAnvanco", methods=["POST"])
+def dadosAnvanco():
     data = request.json
 
     CdFluxo = int(data["CdFluxo"])  # converte pra número

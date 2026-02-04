@@ -22,10 +22,10 @@
             }
             label{
                 font-family: 'Courier New', Courier, monospace;
-                
+                margin: 10px;
             }
             section{
-                    max-width: 500px;
+                    max-width: 600px;
                     margin: 10px auto;
                     background: white;
                     padding: 30px;
@@ -60,7 +60,6 @@
             .inputs{
                 position: static;
                 display: inline-block;
-                margin-top: 20px;
                 width: 50%;
                 height: 50px;
 
@@ -73,7 +72,17 @@
                 border-radius: 15px ;
             }
             .botao{
-                
+                margin-top: 20px;
+                width: 60px;
+                height: 30px;
             }
+            .InputInfo{
+                width: 80%;
+                height: 30px;
+                margin-top: 20px;
+                font-size: 15px;
+
+            }
+            
             
             
