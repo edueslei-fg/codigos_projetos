@@ -1,12 +1,11 @@
 function enviar(){
             fetch("/dados", {
-
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body:JSON.stringify({nome:document.getElementById("nome").value})
+                body:JSON.stringify({CdFluxo:document.getElementById("CdFluxo").value})
             },
             
         )
         .then(r => r.text())
-        .then(resp => alert(resp));
+        .then(response => alert(response));
     }

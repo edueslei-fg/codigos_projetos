@@ -1,21 +1,17 @@
-import requests, logging, json, os      
-from dotenv import load_dotenv          
-import json                             
-def pular_fluxo(CdFluxo):
-    return CdFluxo
+import requests, logging, os      
+from dotenv import load_dotenv                       
 
-load_dotenv();      
+load_dotenv(dotenv_path=r"SmartShareAPI_python\APIs\.env");      
 API_BASE = os.getenv("API_BASE")            
 API_CLIENT = os.getenv("API_CLIENT")        
 USUARIO = os.getenv("USUARIO")              
 SENHA = os.getenv("SENHA")                  
 AUTENTICACAO = os.getenv("AUTENTICACAO")    
-TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")    
+TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")   
 
-cod_fluxo = pular_fluxo()
 Email = "lorenzo.guedes@fgempreendimentos.com.br"           
 
-def call_api_login(CdFluxo):  
+def call_api_login():  
              
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     
     files = {
@@ -29,31 +25,29 @@ def call_api_login(CdFluxo):
     logging.info("Login OK, token recebido")
     return token    
 
-token = call_api_login()       
-def pular_fluxo():    
+def pular_fluxo(CdFluxo):    
+    token = call_api_login()
+
     url = f"{API_BASE}/api/v1/Fluxo/AvancaFluxo"   
     headers = {         
         "Content-Type": "application/json",
         "Accept": "application/json",
         "dsCliente": "mobile",
-        "cdFluxo": str(cod_fluxo), 
+        "cdFluxo": str(CdFluxo), 
         "dsChaveAutenticacao": AUTENTICACAO,
         "tokenUsuario": str(token),   
         "dsEmailExecutor": str(Email) 
     }
-    print("FLUXO:", cod_fluxo) 
+    print("FLUXO:", CdFluxo) 
 
     body = {         
-      "cdFluxo":  str(cod_fluxo),  
+      "cdFluxo":  str(CdFluxo),  
       "dsEmailExecutor": f"{Email}"     
     }
     response = requests.post(url, headers=headers, json=body)      
     print("STATUS:", response.status_code)     
-    print("BODY:", response.text)               
-    print(response.request.headers)             
-    print(response.request.body)                
-
+    print("BODY:", response.text)                            
     response.raise_for_status()
-    return response
+    return response.text
 
-print(pular_fluxo()) 
+ 

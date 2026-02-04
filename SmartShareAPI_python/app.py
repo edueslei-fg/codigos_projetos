@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from FluxoModf import pular_fluxo
+from APIs.FluxoModf import pular_fluxo
 
 app = Flask(__name__)
 
@@ -10,9 +10,10 @@ def index():
 @app.route("/dados", methods=["POST"])
 def dados():
     data = request.json
-    CdFluxo = int(data["CdFluxo"])
-    
-    print("Código",{CdFluxo} ,"recebido")
+
+    CdFluxo = int(data["CdFluxo"])  # converte pra número
+
+    print("Código", CdFluxo, "recebido")
 
     resultado = pular_fluxo(CdFluxo)
 

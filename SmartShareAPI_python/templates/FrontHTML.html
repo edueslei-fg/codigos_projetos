@@ -1,69 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            *{
-                margin: 0;
-                padding: 0;
-
-            }
-            body{
-                background-color: antiquewhite;
-            }
-            nav{
-                flex: 1;
-                margin: 15px;
-                padding-left: 55%;
-            }
-            h1{
-                padding: 0;
-                margin: 5px;
-                width: 300px;
-                
-            }
-            a{
-                text-decoration: none;
-                color: rgb(255, 255, 255);
-            }
-            label{
-                font-family: 'Courier New', Courier, monospace;
-                
-            }
-            .barraFix{
-                position: fixed;
-                top: 0px;
-                left: 0;
-                right: 0;
-                height: 50px;
-                background-color: black;
-                border-radius: 10px;
-                display: flex;
-                
-            }
-            .Titulo{
-                color: beige;
-            }
-            
-            .inputs{
-                display: inline-block;
-                margin-top: 50px;
-                width: 50%;
-                height: 50px;
-
-            }
-            .menu{
-                position: relative;
-                justify-content: center;
-                align-items: center; 
-                width: 200px;
-            }
-            
-        </style>
+        <link rel="stylesheet" href="{{ url_for('static', filename='estilo.css') }}">
     </head>
 
     <body>
         <header>
             <div class="barraFix">
+                <img src="{{ url_for('static', filename='LogoFG.png') }}" alt="" class="LogoFG">
             <h1 class="Titulo">Site Python Teste</h1>
             <nav class="menu">
                 <a href="https://portal.smartshare.com.br/fg/SmartShareAPI/Swagger/ui/index#/">Swagger Smart Share</a>
@@ -71,26 +15,17 @@
         </div>
         </header>
         <br>
+        <section>
+            <h1>Anvançar Fluxo</h1>
         <div class="inputs">
             <label for="Código do Fluxo">Código do Fluxo</label>
             <input type="number" id="CdFluxo" placeholder="Código do CodigoFluxo">
             
-            <button type="button" onclick="enviar()">Enviar</button>
+            <button class="botao" type="button" onclick="enviar()">Enviar</button>
         </div>
+    </section>
     </body>
 
-    <script>
-        function enviar(){
-            fetch("/dados", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body:JSON.stringify({CdFluxo:document.getElementById("CdFluxo").value})
-            },
-            
-        )
-        .then(r => r.text())
-        .then(resp => alert(resp));
-    }
-    </script>
+    <script href="{{url_for('static', filename='InfoEnv.js')}}"></script>
 
 </html>
