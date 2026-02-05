@@ -34,6 +34,8 @@ def Camp_formsPre(CdFluxo, CdTarefa, CdCampo, Valor):
     if response.status_code != 200:
         print("ERRO API:", response.status_code)
         print(response.text)
+        print("HEADERS:", header)
+        print("BODY:", body)
     return response.text
 
     

@@ -1,6 +1,6 @@
 const camposPorTipo = {
   AvancoFluxo: `
-            <input id="CdFluxo" placeholder="Código do Fluxo">
+            <input type="number" id="CdFluxo" placeholder="Código do Fluxo">
           `,
   altInfoCampo: `
             <label for="Código do Fluxo">Código do Fluxo</label>
@@ -39,8 +39,14 @@ function enviar(){
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
   })
-  .then(r => r.json())
-  .then(resp => alert(JSON.stringify(resp)))
+  fetch("/executar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados)
+})
+.then(r => r.json())
+.then(resp => {alert(resp.body.message || JSON.stringify(resp.body));
+})
 }
 
 
