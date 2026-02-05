@@ -16,34 +16,17 @@
         </header>
         
     <section>
-            <h1>Anvançar Fluxo</h1>
-        <div class="inputs">
-            <label for="Código do Fluxo">Código do Fluxo</label>
-            <input type="number" class="InputInfo" id="CdFluxo" placeholder="Código do Fluxo">
-            <button class="botao" type="button" onclick="enviar()">Enviar</button>
-        </div>
+        <H1>Qual Processo Será Feito no Smart Share</H1>
+            <select id="tipo">
+                <option value="">Selecionar uma opção</option>
+                <option value="AvancoFluxo">Avançar Fluxo</option>
+                <option value="altInfoCampo">Alterar informação de um campo no Fluxo</option>
+            </select>
+            <div id = "campos"></div>
+          <button class="botao" onclick="enviar()">Enviar</button>
     </section>
-    <section>
-
-            <h1>Alterar Info. do Formulário de um Processo</h1>
-        <div class="inputs">
-            <label for="Código do Fluxo">Código do Fluxo</label>
-            <input type="number" class="InputInfo" id="CdFluxo" placeholder="Código do Fluxo">
-
-            <label for="Código do Fluxo">Código da Tarefa</label>
-            <input type="text" class="InputInfo" id="CdTarefa" placeholder="Código da Tarefa">
-
-            <label for="Código do Fluxo">Campo para alteração</label>
-            <input type="text" class="InputInfo" id="CdCampo" placeholder="Código do Campo para alteração">
-            <label for="Código do Fluxo">Valor</label>
-            <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
-            <button class="botao" type="button" onclick="enviarAlteracao()">Enviar</button>
-
-        </div>
-    </section>
-
     </body>
 
-    <script href="{{url_for('static', filename='InfoEnv.js')}}"></script>
+    <script src="{{url_for('static', filename='InfoEnv.js')}}"></script>
 
 </html>

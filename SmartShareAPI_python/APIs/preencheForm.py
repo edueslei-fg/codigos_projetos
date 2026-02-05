@@ -2,7 +2,8 @@ import requests, logging, json, os      #|
 from dotenv import load_dotenv          #| Importação de Bibliotecas.
 import json    
 
-load_dotenv()
+load_dotenv(dotenv_path=r"SmartShareAPI_python\APIs\.env");  
+
 API_BASE = os.getenv("API_BASE")            #|
 API_CLIENT = os.getenv("API_CLIENT")        #|
 USUARIO = os.getenv("USUARIO")              #| Extrai as informações do .env.
@@ -10,12 +11,7 @@ SENHA = os.getenv("SENHA")                  #|
 AUTENTICACAO = os.getenv("AUTENTICACAO")    #|
 TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
 
-codFluxo = input("Código do Fluxo:")
-codTarefa = input("Código da Tarefa:")
-campoForms = input("Campo do formulário a ser modificado:")
-novoValor = input("Novo valor no formulário:")
-
-def Camp_formsPre():
+def Camp_formsPre(CdFluxo, CdTarefa, CdCampo, Valor):
     url = f"{API_BASE}/api/v1/Fluxo/PreencheCampoFormulario"
     files = {
         'dsUsuario': (None, 'root.fg'), #|Login Root FG.
@@ -29,18 +25,15 @@ def Camp_formsPre():
         }
 
     body = {
-            "cdFluxo": f"{codFluxo}",  
-            "cdTarefa": f"{codTarefa}",  
-            "cdCampoFormulario": f"{campoForms}",
-            "dsValor": f"{novoValor}"
+            "cdFluxo": f"{CdFluxo}",  
+            "cdTarefa": f"{CdTarefa}",  
+            "cdCampoFormulario": f"{CdCampo}",
+            "dsValor": f"{Valor}"
             }
-    response = requests.post(url, headers=header, json=body)
-    print("STATUS", response.status_code)
-    print("BODY", response.text)
-    print(response.request.headers)
-    print(response.request.body)   
-    response.raise_for_status()
-    return response
+    response = requests.post(url, headers=header, json=body)   
+    if response.status_code != 200:
+        print("ERRO API:", response.status_code)
+        print(response.text)
+    return response.text
 
-print(Camp_formsPre())
     

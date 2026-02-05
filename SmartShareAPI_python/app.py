@@ -1,23 +1,29 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from APIs.FluxoModf import pular_fluxo
+from APIs.preencheForm import Camp_formsPre
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
+
 
 @app.route("/")
 def index():
     return render_template("FrontHTML.html")
 
-@app.route("/dadosAnvanco", methods=["POST"])
-def dadosAnvanco():
+MAPA = {
+     "AvancoFluxo": pular_fluxo,
+     "altInfoCampo": Camp_formsPre
+}
+@app.route("/executar", methods=["POST"])
+def executar():
     data = request.json
+    tipo = data.get("tipo")
 
-    CdFluxo = int(data["CdFluxo"])  # converte pra número
+    if tipo not in MAPA:
+        return jsonify({"erro": "Ação inválida"}), 400
 
-    print("Código", CdFluxo, "recebido")
+    resultado = MAPA[tipo](data)
 
-    resultado = pular_fluxo(CdFluxo)
-
-    return resultado
+    return jsonify(resultado)
 
 if __name__ == "__main__":
     app.run(debug=True)

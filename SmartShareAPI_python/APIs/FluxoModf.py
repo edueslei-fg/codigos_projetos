@@ -12,7 +12,6 @@ TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
 Email = "lorenzo.guedes@fgempreendimentos.com.br"           
 
 def call_api_login():  
-             
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     
     files = {
         'dsUsuario': (None, 'root.fg'), 
@@ -33,21 +32,20 @@ def pular_fluxo(CdFluxo):
         "Content-Type": "application/json",
         "Accept": "application/json",
         "dsCliente": "mobile",
-        "cdFluxo": str(CdFluxo), 
+        "cdFluxo": CdFluxo, 
         "dsChaveAutenticacao": AUTENTICACAO,
         "tokenUsuario": str(token),   
         "dsEmailExecutor": str(Email) 
     }
-    print("FLUXO:", CdFluxo) 
 
     body = {         
       "cdFluxo":  str(CdFluxo),  
       "dsEmailExecutor": f"{Email}"     
     }
-    response = requests.post(url, headers=headers, json=body)      
-    print("STATUS:", response.status_code)     
-    print("BODY:", response.text)                            
-    response.raise_for_status()
+    response = requests.post(url, headers=headers, json=body)                          
+    if response.status_code != 200:
+        print("ERRO API:", response.status_code)
+        print(response.text)
     return response.text
 
  
