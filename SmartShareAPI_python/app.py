@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from APIs.FluxoModf import pular_fluxo
 from APIs.preencheForm import Camp_formsPre
-from APIs.
+from APIs.anexarArquivo import inserir_anexo
 
 app = Flask(__name__, static_folder="static")
 
@@ -21,16 +21,26 @@ def executar():
 
     if tipo not in MAPA:
         return jsonify({"erro": "Ação inválida"}), 400
+    
     elif tipo == "AvancoFluxo":
         CdFluxo = data.get("CdFluxo")
         resultado = pular_fluxo(CdFluxo)
+
     elif tipo == "altInfoCampo":
         CdFluxo = data.get("CdFluxo")
         CdTarefa = data.get("CdTarefa")
         CdCampo = data.get("CdCampo")
         Valor = data.get("Valor")
         resultado = Camp_formsPre(CdFluxo, CdTarefa, CdCampo, Valor)
-    elif tipo = 
+
+    elif tipo == "anexarFluxo":
+        CdFluxo = data.get("CdFluxo")
+        CdTarefa = data.get("CdTarefa")
+        cdTipoAnexo = data.get("cdTipoAnexo")
+        dsAnexo = data.get("dsAnexo")
+        dsNomeArquivoOriginal = data.get("dsNomeArquivoOriginal")
+        resultado = inserir_anexo()
+        
 
     return jsonify(resultado)
 

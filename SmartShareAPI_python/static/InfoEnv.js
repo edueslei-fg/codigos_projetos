@@ -20,9 +20,25 @@ const camposPorTipo = {
             <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
   `,
   anexarFluxo:`
-            <label for="Código do Fluxo">Valor</label>
+            <label for="Código do Fluxo">Código do Fluxo</label>
             <br>
-            <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
+            <input type="text" class="InputInfo" id="cdFluxo" placeholder="cdFluxo">
+            <br>
+            <label for="Código da Tarefa">Código da Tarefa</label>
+            <br>
+            <input type="text" class="InputInfo" id="cdTarefa" placeholder="cdTarefa">
+            <br>
+            <label for=">Código do Tipo no Anexo">Código do Tipo no Anexo</label>
+            <br>
+            <input type="text" class="InputInfo" id="cdTipoAnexo" placeholder="cdTipoAnexo">
+            <br>
+            <label for="Descrição do Anexo">Descrição do Anexo</label>
+            <br>
+            <input type="text" class="InputInfo" id="dsAnexo" placeholder="dsAnexo">
+            <br>
+            <label for="Nome do Arquivo">Nome do Arquivo</label>
+            <br>
+            <input type="text" class="InputInfo" id="dsNomeArquivoOriginal" placeholder="dsNomeArquivoOriginal">
   `
 }
 document.getElementById("tipo").addEventListener("change", e => {

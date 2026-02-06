@@ -9,10 +9,46 @@ SENHA = os.getenv("SENHA")
 AUTENTICACAO = os.getenv("AUTENTICACAO")    
 TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")  
 
-def anexarArquivo():
+
+def call_api_login():
+    url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     
+    files = {
+        'dsUsuario': (None, 'root.fg'), 
+        'dsSenha': (None, 'Fg@2025@')   
+    }
+    headers = {'dsCliente': API_CLIENT, 'dsChaveAutenticacao': AUTENTICACAO}     
+    resp = requests.post(url, headers=headers, files=files)     
+    resp.raise_for_status()         
+    token = resp.json().get("tokenUsuario")     
+    logging.info("Login OK, token recebido")
+    return token
+def inserir_anexo(cd_fluxo, cd_tarefa, cd_tipo_anexo, ds_anexo, caminho_arquivo):
+    token = call_api_login()
+
+    url = f"{API_BASE}/api/v1/Anexo/InserirAnexo"
+
+    nome_arquivo = os.path.basename(caminho_arquivo)
+
     headers = {
-                'dsCliente': API_CLIENT, 
-                'dsChaveAutenticacao': AUTENTICACAO,
-                'cdTarefa' : srt(cdTarefa),
-                
-               }    
+        "Accept": "application/json",
+        "dsCliente": "FG",
+        "dsChaveAutenticacao": AUTENTICACAO,
+        "cdFluxo": str(cd_fluxo),
+        "cdTarefa": str(cd_tarefa),
+        "cdTipoAnexo": str(cd_tipo_anexo),
+        "dsAnexo": ds_anexo,
+        "dsNomeArquivoOriginal": nome_arquivo,
+        "tokenUsuario": token
+    }
+
+    # NÃO colocar Content-Type aqui
+
+    with open(caminho_arquivo, "rb") as f:
+        files = {
+            "file": (nome_arquivo, f)
+        }
+
+        response = requests.post(url, headers=headers, files=files)
+
+    print("STATUS:", response.status_code)
+    print("RETORNO:", response.text)
