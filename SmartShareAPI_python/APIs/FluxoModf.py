@@ -11,7 +11,7 @@ TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
 
 Email = "lorenzo.guedes@fgempreendimentos.com.br"           
 
-def call_api_login():  
+def call_api_login():
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     
     files = {
         'dsUsuario': (None, 'root.fg'), 
@@ -22,25 +22,26 @@ def call_api_login():
     resp.raise_for_status()         
     token = resp.json().get("tokenUsuario")     
     logging.info("Login OK, token recebido")
-    return token    
+    return token
 
 def pular_fluxo(CdFluxo):    
     token = call_api_login()
+    
     url = f"{API_BASE}/api/v1/Fluxo/AvancaFluxo"   
     CdFluxo = str(CdFluxo).strip()
     header = {         
         "Content-Type": "application/json",
         "Accept": "application/json",
         "dsCliente": "mobile",
-        "cdFluxo": f"{CdFluxo}", 
+        "cdFluxo": str(CdFluxo), 
         "dsChaveAutenticacao": AUTENTICACAO,
         "tokenUsuario": str(token),   
         "dsEmailExecutor": str(Email) 
     }
 
     body = {
-        "cdFluxo": CdFluxo,
-      "dsEmailExecutor": f"{Email}"     
+        "cdFluxo": str(CdFluxo),
+        "dsEmailExecutor": f"{Email}"     
     }
     print("CdFluxo enviado:", repr(CdFluxo), type(CdFluxo))
 
@@ -53,5 +54,3 @@ def pular_fluxo(CdFluxo):
     "status": response.status_code,
     "body": response.json() if response.text else {}
     }
-
- 

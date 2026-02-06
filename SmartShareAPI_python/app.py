@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from APIs.FluxoModf import pular_fluxo
 from APIs.preencheForm import Camp_formsPre
+from APIs.
 
 app = Flask(__name__, static_folder="static")
 
@@ -20,8 +21,16 @@ def executar():
 
     if tipo not in MAPA:
         return jsonify({"erro": "Ação inválida"}), 400
-
-    resultado = MAPA[tipo](data)
+    elif tipo == "AvancoFluxo":
+        CdFluxo = data.get("CdFluxo")
+        resultado = pular_fluxo(CdFluxo)
+    elif tipo == "altInfoCampo":
+        CdFluxo = data.get("CdFluxo")
+        CdTarefa = data.get("CdTarefa")
+        CdCampo = data.get("CdCampo")
+        Valor = data.get("Valor")
+        resultado = Camp_formsPre(CdFluxo, CdTarefa, CdCampo, Valor)
+    elif tipo = 
 
     return jsonify(resultado)
 

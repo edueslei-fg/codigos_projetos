@@ -19,33 +19,35 @@ const camposPorTipo = {
             <br>
             <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
   `,
-  usuario: `
-    <input id="Nome" placeholder="Nome">
-    <input id="Email" placeholder="Email">
+  anexarFluxo:`
+            <label for="Código do Fluxo">Valor</label>
+            <br>
+            <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
   `
 }
 document.getElementById("tipo").addEventListener("change", e => {
-  document.getElementById("campos").innerHTML = camposPorTipo[e.target.value] || ""
+document.getElementById("campos").innerHTML = camposPorTipo[e.target.value] || ""
 })
+
+if (tipo = "anexarFluxo"){
+  let formData = new FormData()
+  formData.append("tipo", tipo)
+  formData.append("arquivo", fileInput.files[0])
+}
 function enviar(){
   const tipo = document.getElementById("tipo").value
   const inputs = document.querySelectorAll("#campos input")
   let data = { tipo }
 
   inputs.forEach(i => data[i.id] = i.value)
-
-  fetch("/executar", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(data)
-  })
+  
   fetch("/executar", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dados)
-})
+    body: JSON.stringify(data)
+  })
 .then(r => r.json())
-.then(resp => {alert(resp.body.message || JSON.stringify(resp.body));
+.then(resp => {alert(resp.body?.message || JSON.stringify(resp.body));
 })
 }
 
