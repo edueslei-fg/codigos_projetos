@@ -22,28 +22,28 @@ def call_api_login():
     token = resp.json().get("tokenUsuario")     
     logging.info("Login OK, token recebido")
     return token
-def inserir_anexo(cd_fluxo, cd_tarefa, cd_tipo_anexo, ds_anexo, caminho_arquivo):
+def inserir_anexo(CdFluxo, CdTarefa, cdTipoAnexo, dsAnexo, dsNomeArquivoOriginal):
     token = call_api_login()
 
     url = f"{API_BASE}/api/v1/Anexo/InserirAnexo"
 
-    nome_arquivo = os.path.basename(caminho_arquivo)
+    nome_arquivo = os.path.basename(dsNomeArquivoOriginal)
 
     headers = {
         "Accept": "application/json",
-        "dsCliente": "FG",
+        "dsCliente": "mobile",
         "dsChaveAutenticacao": AUTENTICACAO,
-        "cdFluxo": str(cd_fluxo),
-        "cdTarefa": str(cd_tarefa),
-        "cdTipoAnexo": str(cd_tipo_anexo),
-        "dsAnexo": ds_anexo,
-        "dsNomeArquivoOriginal": nome_arquivo,
+        "cdFluxo": str(CdFluxo),
+        "cdTarefa": str(CdTarefa),
+        "cdTipoAnexo": str(cdTipoAnexo),
+        "dsAnexo": dsAnexo,
+        "dsNomeArquivoOriginal": dsNomeArquivoOriginal,
         "tokenUsuario": token
     }
 
     # NÃO colocar Content-Type aqui
 
-    with open(caminho_arquivo, "rb") as f:
+    with open(dsNomeArquivoOriginal, "rb") as f:
         files = {
             "file": (nome_arquivo, f)
         }

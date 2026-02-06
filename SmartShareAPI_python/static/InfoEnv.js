@@ -38,14 +38,14 @@ const camposPorTipo = {
             <br>
             <label for="Nome do Arquivo">Nome do Arquivo</label>
             <br>
-            <input type="text" class="InputInfo" id="dsNomeArquivoOriginal" placeholder="dsNomeArquivoOriginal">
+            <input type="file" class="InputInfo" id="dsNomeArquivoOriginal" placeholder="dsNomeArquivoOriginal">
   `
 }
 document.getElementById("tipo").addEventListener("change", e => {
 document.getElementById("campos").innerHTML = camposPorTipo[e.target.value] || ""
 })
 
-if (tipo = "anexarFluxo"){
+if (tipo == "anexarFluxo"){
   let formData = new FormData()
   formData.append("tipo", tipo)
   formData.append("arquivo", fileInput.files[0])

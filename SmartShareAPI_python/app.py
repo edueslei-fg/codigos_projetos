@@ -39,7 +39,7 @@ def executar():
         cdTipoAnexo = data.get("cdTipoAnexo")
         dsAnexo = data.get("dsAnexo")
         dsNomeArquivoOriginal = data.get("dsNomeArquivoOriginal")
-        resultado = inserir_anexo()
+        resultado = inserir_anexo(CdFluxo, CdTarefa, cdTipoAnexo, dsAnexo, dsNomeArquivoOriginal)
         
 
     return jsonify(resultado)
