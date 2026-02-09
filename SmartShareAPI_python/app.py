@@ -1,8 +1,9 @@
 from flask import Flask, request, render_template, jsonify
+from importnb import Notebook
 from APIs.FluxoModf import pular_fluxo
 from APIs.preencheForm import Camp_formsPre
 from APIs.anexarArquivo import inserir_anexo
-
+from APIs.API_DesassoiarPapel import Desassociar_papel
 app = Flask(__name__, static_folder="static")
 
 
@@ -40,6 +41,10 @@ def executar():
         dsAnexo = data.get("dsAnexo")
         dsNomeArquivoOriginal = data.get("dsNomeArquivoOriginal")
         resultado = inserir_anexo(CdFluxo, CdTarefa, cdTipoAnexo, dsAnexo, dsNomeArquivoOriginal)
+    
+    elif tipo == "desassociar":
+        with Notebook():
+            import APis.API_DesassosiarPapel()
         
 
     return jsonify(resultado)

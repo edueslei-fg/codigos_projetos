@@ -24,19 +24,19 @@ def call_api_login():
     logging.info("Login OK, token recebido")
     return token
 
-def pular_fluxo(CdFluxo):    
+def pular_fluxo(CdFluxo):
     token = call_api_login()
     print(token)
-    url = f"{API_BASE}/api/v1/Fluxo/AvancaFluxo"   
+    url = f"{API_BASE}/api/v1/Fluxo/AvancaFluxo"
     CdFluxo = str(CdFluxo).strip()
-    header = {         
+    header = {
         "Content-Type": "application/json",
         "Accept": "application/json",
         "dsCliente": "mobile",
-        "cdFluxo": str(CdFluxo), 
+        "cdFluxo": str(CdFluxo),
         "dsChaveAutenticacao": AUTENTICACAO,
-        "tokenUsuario": str(token),   
-        "dsEmailExecutor": str(Email) 
+        "tokenUsuario": str(token),
+        "dsEmailExecutor": str(Email)
     }
     body = {
         "cdFluxo": str(CdFluxo),
