@@ -1,26 +1,26 @@
-import requests, logging, os      
-from dotenv import load_dotenv                       
+import requests, logging, os
+from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"SmartShareAPI_python\APIs\.env");      
-API_BASE = os.getenv("API_BASE")            
-API_CLIENT = os.getenv("API_CLIENT")        
-USUARIO = os.getenv("USUARIO")              
-SENHA = os.getenv("SENHA")                  
-AUTENTICACAO = os.getenv("AUTENTICACAO")    
-TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")   
+load_dotenv(dotenv_path=r"SmartShareAPI_python\APIs\.env");
+API_BASE = os.getenv("API_BASE")
+API_CLIENT = os.getenv("API_CLIENT")
+USUARIO = os.getenv("USUARIO")
+SENHA = os.getenv("SENHA")
+AUTENTICACAO = os.getenv("AUTENTICACAO")
+TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
 
-Email = "lorenzo.guedes@fgempreendimentos.com.br"           
+Email = "lorenzo.guedes@fgempreendimentos.com.br"
 
 def call_api_login():
-    url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"     
+    url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"
     files = {
-        'dsUsuario': (None, 'root.fg'), 
-        'dsSenha': (None, 'Fg@2025@')   
+        'dsUsuario': (None, 'root.fg'),
+        'dsSenha': (None, 'Fg@2025@')
     }
-    headers = {'dsCliente': API_CLIENT, 'dsChaveAutenticacao': AUTENTICACAO}     
-    resp = requests.post(url, headers=headers, files=files)     
-    resp.raise_for_status()         
-    token = resp.json().get("tokenUsuario")     
+    headers = {'dsCliente': API_CLIENT, 'dsChaveAutenticacao': AUTENTICACAO}
+    resp = requests.post(url, headers=headers, files=files)
+    resp.raise_for_status()
+    token = resp.json().get("tokenUsuario")
     logging.info("Login OK, token recebido")
     return token
 
@@ -38,14 +38,13 @@ def pular_fluxo(CdFluxo):
         "tokenUsuario": str(token),   
         "dsEmailExecutor": str(Email) 
     }
-
     body = {
         "cdFluxo": str(CdFluxo),
-        "dsEmailExecutor": f"{Email}"     
+        "dsEmailExecutor": f"{Email}"
     }
     print("CdFluxo enviado:", repr(CdFluxo), type(CdFluxo))
 
-    response = requests.post(url, headers=header, json=body)                          
+    response = requests.post(url, headers=header, json=body)
     if response.status_code != 200:
         print("ERRO API:", response.status_code)
         print(response.text)
