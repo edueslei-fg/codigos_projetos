@@ -41,8 +41,6 @@ def inserir_anexo(CdFluxo, CdTarefa, cdTipoAnexo, dsAnexo, dsNomeArquivoOriginal
         "tokenUsuario": token
     }
 
-    # NÃO colocar Content-Type aqui
-
     with open(dsNomeArquivoOriginal, "rb") as f:
         files = {
             "file": (nome_arquivo, f)

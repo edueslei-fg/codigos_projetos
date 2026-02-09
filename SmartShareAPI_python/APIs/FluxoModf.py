@@ -26,7 +26,7 @@ def call_api_login():
 
 def pular_fluxo(CdFluxo):    
     token = call_api_login()
-    
+    print(token)
     url = f"{API_BASE}/api/v1/Fluxo/AvancaFluxo"   
     CdFluxo = str(CdFluxo).strip()
     header = {         

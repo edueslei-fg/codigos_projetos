@@ -1,5 +1,6 @@
 const camposPorTipo = {
   AvancoFluxo: `
+            <label for="Código do Fluxo">Código do Fluxo</label>
             <input type="number" id="CdFluxo" placeholder="Código do Fluxo">
           `,
   altInfoCampo: `
