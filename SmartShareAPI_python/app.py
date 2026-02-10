@@ -3,7 +3,7 @@ from importnb import Notebook
 from APIs.FluxoModf import pular_fluxo
 from APIs.preencheForm import Camp_formsPre
 from APIs.anexarArquivo import inserir_anexo
-from APIs.API_DesassoiarPapel import Desassociar_papel
+from APIs.anexarArquivo import inserir_anexo
 app = Flask(__name__, static_folder="static")
 
 
@@ -34,17 +34,16 @@ def executar():
         Valor = data.get("Valor")
         resultado = Camp_formsPre(CdFluxo, CdTarefa, CdCampo, Valor)
 
-    elif tipo == "anexarFluxo":
+    elif tipo == "anexarArquivo":
         CdFluxo = data.get("CdFluxo")
         CdTarefa = data.get("CdTarefa")
-        cdTipoAnexo = data.get("cdTipoAnexo")
-        dsAnexo = data.get("dsAnexo")
-        dsNomeArquivoOriginal = data.get("dsNomeArquivoOriginal")
-        resultado = inserir_anexo(CdFluxo, CdTarefa, cdTipoAnexo, dsAnexo, dsNomeArquivoOriginal)
+        cd_Tipo_Anexo = data.get("cd_Tipo_Anexo")
+        ds_Anexo = data.get("ds_Anexo")
+        cd_Tipo_Anexo = data.get("file_path")
+        resultado = inserir_anexo(CdFluxo, CdTarefa, cd_Tipo_Anexo, ds_Anexo, cd_Tipo_Anexo)
     
-    elif tipo == "desassociar":
-        with Notebook():
-            import APis.API_DesassosiarPapel()
+   # elif tipo == "desassociar":
+        
         
 
     return jsonify(resultado)

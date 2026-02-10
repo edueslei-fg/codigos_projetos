@@ -1,13 +1,6 @@
 import requests, logging, os
 from dotenv import load_dotenv
-
-load_dotenv(dotenv_path=r"SmartShareAPI_python\APIs\.env");
-API_BASE = os.getenv("API_BASE")
-API_CLIENT = os.getenv("API_CLIENT")
-USUARIO = os.getenv("USUARIO")
-SENHA = os.getenv("SENHA")
-AUTENTICACAO = os.getenv("AUTENTICACAO")
-TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
+from APIs.load_dependencias import API_BASE, API_CLIENT, AUTENTICACAO
 
 def call_api_login():
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"
@@ -21,31 +14,31 @@ def call_api_login():
     token = resp.json().get("tokenUsuario")
     logging.info("Login OK, token recebido")
     return token
-def inserir_anexo(CdFluxo, CdTarefa, cdTipoAnexo, dsAnexo, dsNomeArquivoOriginal):
+def inserir_anexo(CdFluxo, CdTarefa, cd_Tipo_Anexo, ds_Anexo, file_path):
     token = call_api_login()
 
     url = f"{API_BASE}/api/v1/Anexo/InserirAnexo"
 
-    nome_arquivo = os.path.basename(dsNomeArquivoOriginal)
+    nome_arquivo = os.path.basename(file_path)
 
     headers = {
-        "Accept": "application/json",
+        "Accept": "*/*",
         "dsCliente": "mobile",
+        "tokenUsuario": token,
         "dsChaveAutenticacao": AUTENTICACAO,
         "cdFluxo": str(CdFluxo),
         "cdTarefa": str(CdTarefa),
-        "cdTipoAnexo": str(cdTipoAnexo),
-        "dsAnexo": dsAnexo,
-        "dsNomeArquivoOriginal": dsNomeArquivoOriginal,
-        "tokenUsuario": token
+        "cdTipoAnexo": str(cd_Tipo_Anexo),
+        "dsAnexo": ds_Anexo,
+        "dsNomeArquivoOriginal": file_path,
+        
     }
-
-    with open(dsNomeArquivoOriginal, "rb") as f:
-        files = {
-            "file": (nome_arquivo, f)
-        }
-
-        response = requests.post(url, headers=headers, files=files)
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"Arquivo não encontrado: {file_path}")
+    with open(file_path, "rb") as f:
+        files = (os.path.basename(file_path), f, "application/pdf")
+        response = requests.post(url, headers=headers, files=files, timeout=60)
+        response.raise_for_status()
 
     print("STATUS:", response.status_code)
     print("RETORNO:", response.text)

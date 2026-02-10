@@ -20,7 +20,7 @@ const camposPorTipo = {
             <br>
             <input type="text" class="InputInfo" id="Valor" placeholder="Valor">
   `,
-  anexarFluxo:`
+  anexarArquivo:`
             <label for="Código do Fluxo">Código do Fluxo</label>
             <br>
             <input type="text" class="InputInfo" id="cdFluxo" placeholder="cdFluxo">
@@ -31,42 +31,60 @@ const camposPorTipo = {
             <br>
             <label for=">Código do Tipo no Anexo">Código do Tipo no Anexo</label>
             <br>
-            <input type="text" class="InputInfo" id="cdTipoAnexo" placeholder="cdTipoAnexo">
+            <input type="text" class="InputInfo" id="cd_Tipo_Anexo" placeholder="cdTipoAnexo">
             <br>
             <label for="Descrição do Anexo">Descrição do Anexo</label>
             <br>
-            <input type="text" class="InputInfo" id="dsAnexo" placeholder="dsAnexo">
+            <input type="text" class="InputInfo" id="ds_Anexo" placeholder="dsAnexo">
             <br>
             <label for="Nome do Arquivo">Nome do Arquivo</label>
             <br>
-            <input type="file" class="InputInfo" id="dsNomeArquivoOriginal" placeholder="dsNomeArquivoOriginal">
+            <input type="file" class="InputInfo" id="file_path" placeholder="dsNomeArquivoOriginal">
   `
 }
 document.getElementById("tipo").addEventListener("change", e => {
-document.getElementById("campos").innerHTML = camposPorTipo[e.target.value] || ""
+  document.getElementById("campos").innerHTML =
+    camposPorTipo[e.target.value] || ""
 })
 
-if (tipo == "anexarFluxo"){
-  let formData = new FormData()
-  formData.append("tipo", tipo)
-  formData.append("arquivo", fileInput.files[0])
-}
+
 function enviar(){
   const tipo = document.getElementById("tipo").value
   const inputs = document.querySelectorAll("#campos input")
-  let data = { tipo }
 
+  // 👉 se for upload, usa FormData
+  if (tipo === "anexarFluxo") {
+    let formData = new FormData()
+    formData.append("tipo", tipo)
+
+    inputs.forEach(i => {
+      if (i.type === "file") {
+        formData.append("arquivo", i.files[0])
+      } else {
+        formData.append(i.id, i.value)
+      }
+    })
+
+    fetch("/executar", {
+      method: "POST",
+      body: formData
+    })
+    .then(r => r.json())
+    .then(resp => alert(resp.body?.message || JSON.stringify(resp.body)))
+
+    return
+  }
+
+  // 👉 outros tipos continuam JSON
+  let data = { tipo }
   inputs.forEach(i => data[i.id] = i.value)
-  
+
   fetch("/executar", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-.then(r => r.json())
-.then(resp => {alert(resp.body?.message || JSON.stringify(resp.body));
-})
+  .then(r => r.json())
+  .then(resp => alert(resp.body?.message || JSON.stringify(resp.body)))
 }
-
-
 
