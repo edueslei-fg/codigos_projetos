@@ -39,7 +39,7 @@ const camposPorTipo = {
             <br>
             <label for="Nome do Arquivo">Nome do Arquivo</label>
             <br>
-            <input type="file" class="InputInfo" id="file_path" placeholder="dsNomeArquivoOriginal">
+            <input type="file" class="InputInfo" id="dsNomeArquivoOriginal" placeholder="dsNomeArquivoOriginal">
   `
 }
 document.getElementById("tipo").addEventListener("change", e => {
@@ -49,40 +49,26 @@ document.getElementById("tipo").addEventListener("change", e => {
 
 
 function enviar(){
+
   const tipo = document.getElementById("tipo").value
   const inputs = document.querySelectorAll("#campos input")
 
-  // 👉 se for upload, usa FormData
-  if (tipo === "anexarFluxo") {
-    let formData = new FormData()
-    formData.append("tipo", tipo)
+  let formData = new FormData()
+  formData.append("tipo", tipo)
 
-    inputs.forEach(i => {
-      if (i.type === "file") {
-        formData.append("arquivo", i.files[0])
-      } else {
-        formData.append(i.id, i.value)
+  inputs.forEach(i => {
+    if (i.type === "file") {
+      if (i.files.length > 0) {
+        formData.append(i.id, i.files[0])
       }
-    })
-
-    fetch("/executar", {
-      method: "POST",
-      body: formData
-    })
-    .then(r => r.json())
-    .then(resp => alert(resp.body?.message || JSON.stringify(resp.body)))
-
-    return
-  }
-
-  // 👉 outros tipos continuam JSON
-  let data = { tipo }
-  inputs.forEach(i => data[i.id] = i.value)
+    } else {
+      formData.append(i.id, i.value)
+    }
+  })
 
   fetch("/executar", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    body: formData
   })
   .then(r => r.json())
   .then(resp => alert(resp.body?.message || JSON.stringify(resp.body)))
