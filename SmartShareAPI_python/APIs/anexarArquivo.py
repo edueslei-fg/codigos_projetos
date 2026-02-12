@@ -4,6 +4,7 @@ from APIs.load_dependencias import API_BASE, API_CLIENT, AUTENTICACAO
 from APIs.API_Login import call_api_login
 
 def inserir_anexo(cdFluxo, cdTarefa, cdTipoAnexo, dsAnexo, caminho):
+
     token = call_api_login()
     url = f"{API_BASE}/api/v1/Anexo/InserirAnexo"
 
@@ -11,28 +12,29 @@ def inserir_anexo(cdFluxo, cdTarefa, cdTipoAnexo, dsAnexo, caminho):
 
     headers = {
         "Accept": "*/*",
-        "dsCliente": f"{API_CLIENT}",
-        "token": str(token),
-        "dsChaveAutenticacao": f"{AUTENTICACAO}",
+        "dsCliente": API_CLIENT,
+        "tokenUsuario": str(token),
+        "dsChaveAutenticacao": AUTENTICACAO,
         "cdFluxo": str(cdFluxo),
         "cdTarefa": str(cdTarefa),
         "cdTipoAnexo": str(cdTipoAnexo),
         "dsAnexo": dsAnexo,
         "dsNomeArquivoOriginal": nome_arquivo,
-        
     }
-    response = requests.post(url, headers=headers)
 
-    if response.status_code != 200:
-        print("ERRO API:", response.status_code)
-        print(response.text)
-        print(cdFluxo)
-        print(token)
+    with open(caminho, "rb") as f:
+        files = {
+            "file": (nome_arquivo, f)
+        }
 
-    return  {
-    "status": response.status_code,
-    "body": response.json() if response.text else {}
-    }
+        response = requests.post(url, headers=headers, files=files)
 
     print("STATUS:", response.status_code)
     print("RETORNO:", response.text)
+    print(response.request.headers)
+    print(response.request.body[:500])
+
+    return {
+        "status": response.status_code,
+        "body": response.json() if response.text else {}
+    }
