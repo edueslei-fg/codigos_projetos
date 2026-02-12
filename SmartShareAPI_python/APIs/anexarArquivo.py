@@ -33,5 +33,6 @@ def inserir_anexo(cdFluxo, cdTarefa, cdTipoAnexo, dsAnexo, caminho):
     "status": response.status_code,
     "body": response.json() if response.text else {}
     }
-print("STATUS:", response.status_code)
-print("RETORNO:", response.text)
+
+    print("STATUS:", response.status_code)
+    print("RETORNO:", response.text)
