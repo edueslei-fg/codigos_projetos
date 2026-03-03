@@ -16,7 +16,7 @@ def inserir_anexo(cdFluxo, cdTarefa, cdTipoAnexo, dsAnexo, caminho):
         "tokenUsuario": str(token),
         "dsChaveAutenticacao": AUTENTICACAO,
         "cdFluxo": str(cdFluxo),
-        "cdTarefa": str(cdTarefa),
+        "cdTarefa": 10,
         "cdTipoAnexo": str(cdTipoAnexo),
         "dsAnexo": dsAnexo,
         "dsNomeArquivoOriginal": nome_arquivo,

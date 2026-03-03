@@ -8,10 +8,6 @@ const camposPorTipo = {
             <br>
             <input type="number" class="InputInfo" id="CdFluxo" placeholder="Código do Fluxo">
             <br>
-            <label for="Código do Fluxo">Código da Tarefa</label>
-            <br>
-            <input type="number" class="InputInfo" id="CdTarefa" placeholder="Código da Tarefa">
-            <br>
             <label for="Código do Fluxo">Campo para alteração</label>
             <br>
             <input type="text" class="InputInfo" id="CdCampo" placeholder="Código do Campo para alteração">
@@ -25,14 +21,6 @@ const camposPorTipo = {
             <br>
             <input type="text" class="InputInfo" id="cdFluxo" placeholder="cdFluxo">
             <br>
-            <label for="Código da Tarefa">Código da Tarefa</label>
-            <br>
-            <input type="text" class="InputInfo" id="cdTarefa" placeholder="cdTarefa">
-            <br>
-            <label for=">Código do Tipo no Anexo">Código do Tipo no Anexo</label>
-            <br>
-            <input type="text" class="InputInfo" id="cd_Tipo_Anexo" placeholder="cdTipoAnexo">
-            <br>
             <label for="Descrição do Anexo">Descrição do Anexo</label>
             <br>
             <input type="text" class="InputInfo" id="ds_Anexo" placeholder="dsAnexo">
@@ -40,6 +28,12 @@ const camposPorTipo = {
             <label for="Nome do Arquivo">Nome do Arquivo</label>
             <br>
             <input type="file" class="InputInfo" id="dsNomeArquivoOriginal" placeholder="dsNomeArquivoOriginal">
+  `,
+  verifTarefa:`
+            <label for="Código do Processo">Código do Processo</label>
+            <br>
+            <input type="text" class="InputInfo" id="cdProcesso" placeholder="cdProcesso">
+            <br>
   `
 }
 document.getElementById("tipo").addEventListener("change", e => {

@@ -1,13 +1,6 @@
 import requests, logging, os
 from dotenv import load_dotenv
-
-load_dotenv(dotenv_path=r"SmartShareAPI_python\APIs\.env");
-API_BASE = os.getenv("API_BASE")
-API_CLIENT = os.getenv("API_CLIENT")
-USUARIO = os.getenv("USUARIO")
-SENHA = os.getenv("SENHA")
-AUTENTICACAO = os.getenv("AUTENTICACAO")
-TOKEN_CLIENT = os.getenv("TOKEN_CLIENT")
+from APIs.load_dependencias import API_BASE, API_CLIENT, AUTENTICACAO
 
 def call_api_login():
     url = f"{API_BASE}/api/v2/Usuario/ValidarLogin"
