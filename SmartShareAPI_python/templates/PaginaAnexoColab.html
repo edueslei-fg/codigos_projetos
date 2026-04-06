@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<Html>
+    <Head>
+
+    </Head>
+    <body>
+        <header>
+            <div class="barraFix">
+                <img src="{{ url_for('static', filename='LogoFG.png') }}" alt="" class="LogoFG">
+            <h1 class="Titulo">API Smart Share</h1>
+            <nav class="menu">
+                <a href="https://portal.smartshare.com.br/fg/SmartShareAPI/Swagger/ui/index#/" target="_blank">Swagger Smart Share</a>
+            </nav>
+        </div>
+        </header>
+        <section>
+        <H1>Qual Processo Será Feito no Smart Share</H1>
+            <select id="tipo">
+                <option value="">Selecionar uma opção</option>
+                <option value="AvancoFluxo">Avançar Fluxo</option>
+                <option value="altInfoCampo">Alterar informação de um campo no Fluxo</option>
+                <option value="anexarArquivo">Anexar Arquivo em um Fluxo Existente</option>
+            </select>
+            <div id = "campos"></div>
+          <button class="botao" onclick="enviar()">Enviar</button>
+    </section>
+    </body>
+
+    <script src="{{url_for('static', filename='InfoEnv.js')}}"></script>
+    </body>
+</Html>
